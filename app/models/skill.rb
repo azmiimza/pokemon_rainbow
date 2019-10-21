@@ -1,5 +1,7 @@
 class Skill < ApplicationRecord
   extend Enumerize
+  has_many :pokemon_skills
+  has_many :pokemons, through: :pokemon_skills
 
   ELEMENT_TYPE = ["normal","fire","fighting","water",
     "flying","grass","poison","electric","ground","psychic","rock","ice",

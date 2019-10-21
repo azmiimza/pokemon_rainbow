@@ -13,5 +13,25 @@
     <h3>Defence: <%= @pokemon.defence%></h3>
     <h3>Speed: <%= @pokemon.speed%></h3>
     <h3>Current Experience: <%= @pokemon.current_experience%></h3>
+
+    <table class="table table-hover" style="margin-top:50px">
+    <tr>
+      <th>Skill Name</th>
+      <th>Current PP</th>
+      <th></th>
+      
+    </tr>
+
+    <% @pokemon_skills.each do |pokemon|%>
+    <tr>
+      <td> <%= pokemon.skill_id%> </td>
+      <td> <%= pokemon.current_pp%> </td>
+      <td>  <%= link_to "Delete", @pokemon, method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%> </td>
+    </tr>
+    <% end %>
+  </table>
+
+    <%= select_tag 'skill_id', options_for_select(Skill.all.collect{ |u| [u.name, u.id] }), class: "form-control"%>
+    <%= link_to "Add Skills", {}, class:"btn btn-primary", style:"margin-top:30px"%>
   </div>
 </div>

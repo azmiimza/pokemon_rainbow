@@ -39,6 +39,8 @@ class PokemonsController < ApplicationController
 
   def show
     @pokemon = Pokemon.find(params[:id])
+    @pokemon_skills = PokemonSkill.where(pokemon_id: params[:id])
+    
   end
 
   def edit

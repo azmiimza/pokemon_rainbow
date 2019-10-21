@@ -2,6 +2,9 @@ class Pokemon < ApplicationRecord
   extend Enumerize
   # after_initialize :set_defaults, if: :new_record?
   belongs_to :pokedex
+  has_many :pokemon_skills
+  has_many :skills, through: :pokemon_skills
+
   validates :name, presence: true, length:{maximum:45}, uniqueness: true
   validates :pokedex, presence: true
   validates :max_health_point, presence: true, numericality: { greater_than_or_equal_to:0}
