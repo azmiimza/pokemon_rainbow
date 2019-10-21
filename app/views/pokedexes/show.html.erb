@@ -1,0 +1,22 @@
+<% content_for :title, "#{@pokedex.name}" %>
+
+<div class="row">
+  <div class="col-md-6 text-center" style="margin-top:30px">
+    <%= link_to "Edit", edit_pokedex_path, class:"btn btn-primary"%>
+    <%= link_to "Delete", @pokedex, method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%>
+    <div class="col-md-12" style="margin-top:30px">
+      <h1 style="margin-bottom: 30px"><strong><%= @pokedex.name%></strong></h1>
+      <%= image_tag("#{@pokedex.image_url}")%>
+    </div>
+
+  </div>
+
+
+  <div class="col-md-6" style="margin-top:100px">
+    <h3>Element Type: <%= @pokedex.element_type%></h3>
+    <h3>Base Health Point: <%= @pokedex.base_health_point%></h3>
+    <h3>Base Attack: <%= @pokedex.base_attack%></h3>
+    <h3>Base Defence: <%= @pokedex.base_defence%></h3>
+    <h3>Base Speed: <%= @pokedex.base_speed%></h3>
+  </div>
+</div>

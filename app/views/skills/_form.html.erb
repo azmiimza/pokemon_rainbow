@@ -1,0 +1,14 @@
+<%= form_for(@skill) do |f|%>
+<%= render 'shared/error_messages', object: f.object%>
+<div class="field">
+  <%= f.label :name%>
+  <%= f.text_field :name, class: 'form-control'%>
+  <%= f.label :element_type%>
+  <%= f.select :element_type, Pokedex.element_type.options, {}, class: "form-control" %>
+  <%= f.label :power%>
+  <%= f.text_field :power, class: 'form-control'%>
+  <%= f.label :max_pp%>
+  <%= f.text_field :max_pp, class: 'form-control'%>
+</div>
+<%= f.submit "Submit", class: "btn btn-primary", style: "margin-top: 10px;"%>
+<%end%>

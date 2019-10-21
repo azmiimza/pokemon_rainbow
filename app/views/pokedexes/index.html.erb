@@ -1,0 +1,32 @@
+<% content_for :title, "Pokedex List" %>
+
+<div class="container">
+  <h1><strong>Pokedexes</strong></h1>
+
+  <%= link_to "New Pokedex", new_pokedex_path, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Name</th>
+      <th>Base Health</th>
+      <th>Base Attack</th>
+      <th>Base Defence</th>
+      <th>Base Speed</th>
+      <th>Element Type</th>
+      <th>Image</th>
+    </tr>
+    <% @pokedexes.each do |pokedex|%>
+    <tr>
+      <td> <%= link_to pokedex.name, pokedex%> </td>
+      <td> <%= pokedex.base_health_point%> </td>
+      <td> <%= pokedex.base_attack%> </td>
+      <td> <%= pokedex.base_defence%> </td>
+      <td> <%= pokedex.base_speed%> </td>
+      <td> <%= pokedex.element_type%> </td>
+      <td> <%= image_tag("#{pokedex.image_url}", height:"30")%> </td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @pokedexes, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</div>

@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pokedex: one
+  name: MyString
+  level: 1
+  max_health_point: 1
+  current_health_point: 1
+  attack: 1
+  defence: 1
+  speed: 1
+  current_experience: 1
+
+two:
+  pokedex: two
+  name: MyString
+  level: 1
+  max_health_point: 1
+  current_health_point: 1
+  attack: 1
+  defence: 1
+  speed: 1
+  current_experience: 1

@@ -1,0 +1,17 @@
+<% content_for :title, "#{@pokemon.name}" %>
+
+<div class="container">
+  <div class="col-md-12" style="margin-top:30px">
+    <%= link_to "Edit", edit_pokemon_path, class:"btn btn-primary"%>
+    <%= link_to "Delete", @pokemon, method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%>
+
+    <h1 style="margin-top: 30px;margin-bottom:30px"><strong><%= @pokemon.name%></strong></h1>
+    <h3>Level: <%= @pokemon.level%></h3>
+    <h3>Max Health Point: <%= @pokemon.max_health_point%></h3>
+    <h3>Current Health Point: <%= @pokemon.current_health_point%></h3>
+    <h3>Attack: <%= @pokemon.attack%></h3>
+    <h3>Defence: <%= @pokemon.defence%></h3>
+    <h3>Speed: <%= @pokemon.speed%></h3>
+    <h3>Current Experience: <%= @pokemon.current_experience%></h3>
+  </div>
+</div>

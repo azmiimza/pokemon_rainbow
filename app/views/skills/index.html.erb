@@ -1,0 +1,26 @@
+<% content_for :title, "Skill List" %>
+
+<div class="container">
+  <h1><strong>Skills</strong></h1>
+
+  <%= link_to "New Skill", new_skill_path, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Name</th>
+      <th>Power</th>
+      <th>Max PP</th>
+      <th>Element Type</th>
+    </tr>
+    <% @skills.each do |skill|%>
+    <tr>
+      <td> <%= link_to skill.name, skill%> </td>
+      <td> <%= skill.power%> </td>
+      <td> <%= skill.max_pp%> </td>
+      <td> <%= skill.element_type%> </td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @skills, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</div>

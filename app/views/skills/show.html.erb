@@ -1,0 +1,13 @@
+<% content_for :title, "#{@skill.name}" %>
+
+<div class="container">
+  <div class="col-md-12" style="margin-top:30px">
+    <%= link_to "Edit", edit_skill_path, class:"btn btn-primary"%>
+    <%= link_to "Delete", @skill, method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%>
+
+    <h1 style="margin-top: 30px;margin-bottom:30px"><strong><%= @skill.name%></strong></h1>
+    <h3>Element Type: <%= @skill.element_type%></h3>
+    <h3>Power: <%= @skill.power%></h3>
+    <h3>Max PP: <%= @skill.max_pp%></h3>
+  </div>
+</div>

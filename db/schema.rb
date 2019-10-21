@@ -10,9 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_10_21_031227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "pokedexes", force: :cascade do |t|
+    t.string "name"
+    t.integer "base_health_point"
+    t.integer "base_attack"
+    t.integer "base_defence"
+    t.integer "base_speed"
+    t.string "element_type"
+    t.string "image_url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "pokemons", force: :cascade do |t|
+    t.bigint "pokedex_id", null: false
+    t.string "name"
+    t.integer "level"
+    t.integer "max_health_point"
+    t.integer "current_health_point"
+    t.integer "attack"
+    t.integer "defence"
+    t.integer "speed"
+    t.integer "current_experience"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pokedex_id"], name: "index_pokemons_on_pokedex_id"
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.integer "power"
+    t.integer "max_pp"
+    t.string "element_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "pokemons", "pokedexes"
 end
