@@ -38,6 +38,8 @@ class PokedexesController < ApplicationController
       flash[:success] = "#{@pokedex.name} created"
       redirect_to pokedex_path(@pokedex.id)
     else
+    #   require 'pry'
+    # binding.pry
       render 'new'
     end
   end

@@ -1,0 +1,31 @@
+<% content_for :title, "Pokemon Battle" %>
+
+<div class="container">
+  <h1><strong>Pokemon Battles</strong></h1>
+
+  <%= link_to "New Battle", new_pokemon_battle_path, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Battle ID</th>
+      <th>Pokemon 1</th>
+      <th>Pokemon 2</th>
+      <th>Current Turn</th>
+      <th>State</th>
+      <th>Winner</th>
+    </tr>
+    <% @battles.each do |battle|%>
+    <tr>
+      <td> <%= link_to battle.id, pokemon_battle %>  </td>
+      <td> <%= battle.pokemon1_id%> </td>
+      <td> <%= battle.pokemon2_id%> </td>
+      <td> <%= battle.current_turn%> </td>
+      <td> <%= battle.state%> </td>
+      <td> <%= battle.pokemon_winner_id%> </td>
+      
+    </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @battles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</div>

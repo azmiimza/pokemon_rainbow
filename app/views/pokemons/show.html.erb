@@ -14,24 +14,32 @@
     <h3>Speed: <%= @pokemon.speed%></h3>
     <h3>Current Experience: <%= @pokemon.current_experience%></h3>
 
-    <table class="table table-hover" style="margin-top:50px">
+  </div>
+
+
+  <table class="table table-hover" style="margin-top:50px">
     <tr>
       <th>Skill Name</th>
-      <th>Current PP</th>
-      <th></th>
-      
+      <th>Current PP / Max PP</th>
+      <th>Action</th>
     </tr>
 
-    <% @pokemon_skills.each do |pokemon|%>
+    <% @pokemon_skills.each do |pokemon_skill|%>
     <tr>
-      <td> <%= pokemon.skill_id%> </td>
-      <td> <%= pokemon.current_pp%> </td>
-      <td>  <%= link_to "Delete", @pokemon, method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%> </td>
+      <td> <%= pokemon_skill.skill.name%> </td>
+      <td> <%= "#{pokemon_skill.current_pp} / #{pokemon_skill.skill.max_pp}"%> </td>
+      <td>
+        <%= link_to "Remove", pokemon_pokemon_skill_path(pokemon_skill.id), method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%>
+      </td>
     </tr>
     <% end %>
   </table>
 
-    <%= select_tag 'skill_id', options_for_select(Skill.all.collect{ |u| [u.name, u.id] }), class: "form-control"%>
-    <%= link_to "Add Skills", {}, class:"btn btn-primary", style:"margin-top:30px"%>
-  </div>
+  
+  <%= form_for(:skill, url: pokemon_pokemon_skills_path(@pokemon.id)) do |f|%>
+  
+    <%= f.select :skill_id, options_for_select(Skill.all.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
+    <%= f.submit "Submit", class: "btn btn-primary", style: "margin-top: 30px;"%>
+  <%end%>
+
 </div>

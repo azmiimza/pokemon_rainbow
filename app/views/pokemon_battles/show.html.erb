@@ -1,0 +1,18 @@
+<div class="container">
+  <%= form_for(@battle) do |f|%>
+  <%= render 'shared/error_messages', object: f.object%>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.label 'Select Pokemon 1'%>
+      <%= f.select :pokemon1_id, options_for_select(Pokemon.all.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= f.label 'Select Pokemon 2'%>
+      <%= f.select :pokemon2_id, options_for_select(Pokemon.all.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
+    </div>
+
+  </div>
+  <%= f.submit "Battle", class: "btn btn-primary", style: "margin-top: 10px;"%>
+  <%end%>
+</div>

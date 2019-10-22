@@ -1,29 +1,37 @@
 class PokemonSkillsController < ApplicationController
-  def create
-    @skill = PokemonSkill.new(skill_params)
-    @selected = Skill.find(@skill.id)
-    @skill.pokemon_id = @pokemon.id
-    @skill.skill_id = @selected.id
-    @skill.current_pp = @selected.max_pp
 
-    if @skill.save
+  def create
+   
+    @poke_skill = PokemonSkill.new(skill_params)
+    
+    @selected = Skill.find(params[:skill][:skill_id])
+    @poke_skill.pokemon_id = Pokemon.find(params[:pokemon_id]).id
+    @poke_skill.current_pp = @selected.max_pp
+
+    if @poke_skill.save
       flash[:success] = "Skill added"
-      redirect_to pokemon_path(@pokemon.id)
+      redirect_to pokemon_path(@poke_skill.pokemon_id)
     else
-      render 'new'
+           require 'pry'
+    binding.pry
+      flash[:danger] = @poke_skill.errors.full_messages.join(" , ")
+      redirect_to pokemon_path(@poke_skill.pokemon_id)
+      
     end
   end
 
   def destroy
-    PokemonSkill.find(params[:id]).destroy
+    # require 'pry'
+    # binding.pry
+    PokemonSkill.find(params[:pokemon_id]).destroy
     flash[:success] = "Pokemon Skill deleted"
-    redirect_to pokemon_path
+    redirect_to pokemon_path(params[:id])
   end
 
   private
 
   def skill_params
 
-    params.require(:pokemon_skill).permit(:pokemon_id, :skill_id, :current_pp)
+    params.require(:skill).permit(:skill_id)
   end
 end
