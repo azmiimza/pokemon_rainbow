@@ -1,0 +1,75 @@
+<% content_for :title, "Pokemon Battle - #{@pokemon_battle.id}" %>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-5">
+                <h1 style="margin-bottom: 20px"><strong><%= @pokemon_battle.pokemon1.name%></strong></h1>
+                <h2>Lv.
+                    <%= @pokemon_battle.pokemon1.level%>
+                </h2>
+                <h3>Exp -
+                    <%= @pokemon_battle.pokemon1.current_experience%>
+                </h3>
+                <%= image_tag("#{@pokemon_battle.pokemon1.pokedex.image_url}", {:style => "height:100px;margin-top:20px"})%>
+                    <h4 style="margin-top:20px">Current HP :
+                        <%= @pokemon_battle.pokemon1.current_health_point%> /
+                            <%= @pokemon_battle.pokemon1.max_health_point%>
+                    </h4>
+                    <h4 style="margin-top:20px">Attack :
+                        <%= @pokemon_battle.pokemon1.attack%>
+                    </h4>
+                    <h4 style="margin-top:20px">Defence :
+                        <%= @pokemon_battle.pokemon1.defence%>
+                    </h4>
+                    <h4 style="margin-top:20px">Speed :
+                        <%= @pokemon_battle.pokemon1.speed%>
+                    </h4>
+
+
+                    <%= select_tag :skill_id, options_for_select(@pokemon_battle.pokemon1.skills.collect{ |u| [u.name, u.id] }),  class: "form-control" %>
+                        <%= link_to "Attack", {}, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
+                            <%= link_to "Surrender", {}, html_options={class: "btn btn-danger", style: "margin-top:30px; margin-bottom:30px"}%>
+
+
+            </div>
+
+            <div class="col-md-2 align-items-center">
+                <h1>Battle
+                    <%= @pokemon_battle.id %>
+                </h1>
+                <h1 style="font-size:100px;margin-top:50%">VS</h1>
+            </div>
+
+            <div class="col-md-5">
+                <h1 style="margin-bottom: 20px"><strong><%= @pokemon_battle.pokemon2.name%></strong></h1>
+                <h2>Lv.
+                    <%= @pokemon_battle.pokemon2.level%>
+                </h2>
+                <h3>Exp -
+                    <%= @pokemon_battle.pokemon2.current_experience%>
+                </h3>
+                <%= image_tag("#{@pokemon_battle.pokemon2.pokedex.image_url}", {:style => "height:100px;margin-top:20px"})%>
+                    <h4 style="margin-top:20px">Current HP :
+                        <%= @pokemon_battle.pokemon2.current_health_point%>/
+                            <%= @pokemon_battle.pokemon2.max_health_point%>
+                    </h4>
+                    <h4 style="margin-top:20px">Attack :
+                        <%= @pokemon_battle.pokemon2.attack%>
+                    </h4>
+                    <h4 style="margin-top:20px">Defence :
+                        <%= @pokemon_battle.pokemon2.defence%>
+                    </h4>
+                    <h4 style="margin-top:20px">Speed :
+                        <%= @pokemon_battle.pokemon2.speed%>
+                    </h4>
+
+                    <%= select_tag :skill_id, options_for_select(@pokemon_battle.pokemon2.skills.collect{ |u| [u.name, u.id] }),  class: "form-control" %>
+                        <%= link_to "Attack", {}, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
+                            <%= link_to "Surrender", {}, html_options={class: "btn btn-danger", style: "margin-top:30px; margin-bottom:30px"}%>
+
+            </div>
+
+        </div>
+
+
+    </div>

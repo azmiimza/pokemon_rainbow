@@ -4,7 +4,6 @@ class PokemonsController < ApplicationController
   end
 
   def create
-    
     @pokemon = Pokemon.new(poke_params)
     @selected = Pokedex.find(@pokemon.pokedex_id)
     @pokemon.max_health_point = @selected.base_health_point
@@ -39,10 +38,11 @@ class PokemonsController < ApplicationController
 
   def show
     @pokemon = Pokemon.find(params[:id])
-    @pokemon_skills = PokemonSkill.where(pokemon_id: params[:id])
-    @skill = @pokemon.pokemon_skills.build 
-    
+    @pokemon_skills = @pokemon.pokemon_skills
+
+    # @skill = @pokemon.pokemon_skills.find(params[:skill_id])
   end
+
 
   def edit
     @pokemon = Pokemon.find(params[:id])
