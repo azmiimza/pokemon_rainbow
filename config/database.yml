@@ -1,12 +1,15 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
-  database: pokemon_development
   pool: 5
+  host: localhost
+  username: postgres
+  password: qwrt4321
 
+development:
+  <<: *default
+  database: pokemon_development
 
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: pokemon_test
-  pool: 5

@@ -1,4 +1,4 @@
-class Pokemon < ApplicationRecord
+  class Pokemon < ApplicationRecord
   extend Enumerize
   # after_initialize :set_defaults, if: :new_record?
   belongs_to :pokedex

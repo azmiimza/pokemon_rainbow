@@ -26,12 +26,22 @@
     <tr>
       <td> <%= pokemon.skill_id%> </td>
       <td> <%= pokemon.current_pp%> </td>
-      <td>  <%= link_to "Delete", @pokemon, method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%> </td>
+      <td>  <%= link_to "Delete", pokemon_skill_path(pokemon.skill_id) , method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%> </td>
     </tr>
     <% end %>
   </table>
 
-    <%= select_tag 'skill_id', options_for_select(Skill.all.collect{ |u| [u.name, u.id] }), class: "form-control"%>
-    <%= link_to "Add Skills", {}, class:"btn btn-primary", style:"margin-top:30px"%>
+ <div class="row">
+    <div class="col-md-3 col-md-9">
+    <%= form_for(@skill) do |f|%>
+      <div class="field">
+        <%= f.label 'Choose Skill'%>
+        <%= f.select :skill_id, options_for_select(Skill.all.collect{|x| [x.name, x.id]}), {}, class: "form-control" %>
+ 
+      </div>
+      <%= f.submit "Submit", class: "btn btn-primary", style: "margin-top: 10px;"%>
+    <%end%>
+      </div>
+  </div>
   </div>
 </div>

@@ -1,10 +1,10 @@
 class PokemonSkillsController < ApplicationController
   def create
-    @skill = PokemonSkill.new(skill_params)
-    @selected = Skill.find(@skill.id)
-    @skill.pokemon_id = @pokemon.id
-    @skill.skill_id = @selected.id
-    @skill.current_pp = @selected.max_pp
+    @selected_poke =  Pokemon.find(params[:id])
+    @selected_skill = Skill.where(skill_id: params[:skill_id])
+
+    @skill = @selected_poke.skills << @selected_skill
+    @skill.current_pp = @selected_skill.max_pp
 
     if @skill.save
       flash[:success] = "Skill added"

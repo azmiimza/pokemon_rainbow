@@ -40,13 +40,13 @@ ActiveRecord::Schema.define(version: 2019_10_21_080727) do
   create_table "pokemons", force: :cascade do |t|
     t.bigint "pokedex_id", null: false
     t.string "name"
-    t.integer "level"
+    t.integer "level", default: 1
     t.integer "max_health_point"
     t.integer "current_health_point"
     t.integer "attack"
     t.integer "defence"
     t.integer "speed"
-    t.integer "current_experience"
+    t.integer "current_experience", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["pokedex_id"], name: "index_pokemons_on_pokedex_id"

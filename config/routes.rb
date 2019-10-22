@@ -12,9 +12,8 @@ Rails.application.routes.draw do
 
   resources :pokedexes
   resources :skills
-  resources :pokemons do
-    resources :pokemon_skills, only: [:create, :destroy]
-  end
+  resources :pokemons 
+  resources :pokemon_skills, only: [:create, :destroy]
 
   root 'basic_layouts#home'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
