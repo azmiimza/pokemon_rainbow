@@ -18,8 +18,6 @@
             <%= f.label 'Select Pokemon 2'%>
             <%= f.select :pokemon2_id, options_for_select(Pokemon.all.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
         </div>
-
     </div>
-
     <%end%>
 </div>

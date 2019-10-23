@@ -1,4 +1,6 @@
 class PokemonBattle < ApplicationRecord
+  # include PokemonBattleCalculator
+
   extend Enumerize
   belongs_to :pokemon1, class_name: 'Pokemon'
   belongs_to :pokemon2, class_name: 'Pokemon'
@@ -10,11 +12,11 @@ class PokemonBattle < ApplicationRecord
   FINISHED = 'Finished'.freeze
   STATE=[ONGOING, FINISHED]
   enumerize :state, in: STATE
-
-  validate :check_state
+  
   validate :check_player
   validate :check_current_health_point
   after_initialize :set_default_attr, if: :new_record?
+  after_initialize :check_state, if: :new_record?
 
   validates :pokemon1_id, presence: true, numericality: {greater_than: 0}
   validates :pokemon2_id, presence: true, numericality: {greater_than: 0}

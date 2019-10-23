@@ -25,15 +25,28 @@
                 <%= @pokemon_battle.pokemon1.speed%>
             </h4>
 
-            <%= select_tag :skill_id, options_for_select(@pokemon_battle.pokemon1.skills.collect{ |u| [u.name, u.id] }),  class: "form-control" %>
-            <%= link_to "Attack", {}, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
-            <%= link_to "Surrender", {}, html_options={class: "btn btn-danger", style: "margin-top:30px; margin-bottom:30px"}%>
+            <%= form_for(:battle, url: pokemon_battle_path(@pokemon_battle.id), method: "patch") do |f|%>
+            <%= f.hidden_field :player_one, :value=>@pokemon_battle.pokemon1.id %>
+            <%= f.hidden_field :player_two, :value=>@pokemon_battle.pokemon2.id %>
+          
+            <%= f.select :skill_id, options_for_select(@pokemon_battle.pokemon1.skills.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
+            <% if @pokemon_battle.current_turn%2==0 %>
+            <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>
+            <% else %>
+            <%= f.submit "Attack",class: "btn btn-primary", style: "margin-top: 30px;"%>
+            <%end%>
+            <%= f.hidden_field :player_one_surrender, :value=>true %>
+            <%= f.submit "Surrender", class: "btn btn-danger", style: "margin-top: 30px;"%>
+            <%end%>
         </div>
 
         <div class="col-md-4">
             <h1>Battle
                 <%= @pokemon_battle.id %>
             </h1>
+            <h3>Turn
+                <%= @pokemon_battle.current_turn %>
+            </h3>
             <h1 style="font-size:100px;margin-top:50%">VS</h1>
         </div>
 
@@ -60,10 +73,19 @@
                 <%= @pokemon_battle.pokemon2.speed%>
             </h4>
 
-            <%= select_tag :skill_id, options_for_select(@pokemon_battle.pokemon2.skills.collect{ |u| [u.name, u.id] }),  class: "form-control" %>
-            <%= link_to "Attack", {}, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
-            <%= link_to "Surrender", {}, html_options={class: "btn btn-danger", style: "margin-top:30px; margin-bottom:30px"}%>
-
+             <%= form_for(:battle, url: pokemon_battle_path(@pokemon_battle.id), method: "patch") do |f|%>
+            <%= f.hidden_field :player_one, :value=>@pokemon_battle.pokemon1.id %>
+            <%= f.hidden_field :player_two, :value=>@pokemon_battle.pokemon2.id %>
+          
+            <%= f.select :skill_id, options_for_select(@pokemon_battle.pokemon2.skills.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
+            <% if @pokemon_battle.current_turn%2==1 %>
+            <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>
+            <% else %>
+            <%= f.submit "Attack",class: "btn btn-primary", style: "margin-top: 30px;"%>
+            <%end%>
+            <%= f.hidden_field :player_two_surrender, :value=>true %>
+            <%= f.submit "Surrender", class: "btn btn-danger", style: "margin-top: 30px;"%>
+            <%end%>
         </div>
 
     </div>
