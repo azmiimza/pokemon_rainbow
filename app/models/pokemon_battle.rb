@@ -2,32 +2,54 @@ class PokemonBattle < ApplicationRecord
   extend Enumerize
   belongs_to :pokemon1, class_name: 'Pokemon'
   belongs_to :pokemon2, class_name: 'Pokemon'
-  belongs_to :pokemon_winner, class_name: 'Pokemon'
-  belongs_to :pokemon_loser, class_name: 'Pokemon'
+  belongs_to :pokemon_winner, class_name: 'Pokemon', optional: true
+  belongs_to :pokemon_loser, class_name: 'Pokemon', optional: true
 
-  STATE=["Ongoing","Finished"]
+  # State Constant
+  ONGOING = 'Ongoing'.freeze
+  FINISHED = 'Finished'.freeze
+  STATE=[ONGOING, FINISHED]
   enumerize :state, in: STATE
 
+  validate :check_state
   validate :check_player
   validate :check_current_health_point
-  validate :check_state
+  after_initialize :set_default_attr, if: :new_record?
+
+  validates :pokemon1_id, presence: true, numericality: {greater_than: 0}
+  validates :pokemon2_id, presence: true, numericality: {greater_than: 0}
+  validates :current_turn, numericality: {greater_than: 0}
+  validates :state, presence: true, length: {maximum:45}
+  validates :experience_gain, numericality: {greater_than_or_equal_to: 0}
+  validates :pokemon1_max_health_point, presence: true, numericality: { greater_than_or_equal_to:0}
+  validates :pokemon2_max_health_point, presence: true, numericality: { greater_than_or_equal_to:0}
 
   private
 
-  def check_state
-    p1 = pokemon1.id
-    p2 = pokemon2.id
+  def set_default_attr
+    self.pokemon_winner_id ||= nil
+    self.pokemon_loser_id ||= nil
+    self.state ||= ONGOING
+    self.current_turn ||= 1
+    self.experience_gain ||= 0
+  end
 
-    if p1 && state=="Ongoing"
-       errors.add(:base, "Player 1 still ongoing in battle")
-    elsif p2 && state=="Ongoing"
-      errors.add(:base, "Player 2 still ongoing in battle")
+  def check_state
+    # require 'pry'
+    # binding.pry
+    ongoing = PokemonBattle.where(state: ONGOING)
+    players = ongoing.collect{|x|[x.pokemon1_id, x.pokemon2_id]}.flatten
+
+    if players.include? pokemon1_id
+      errors.add(:base, "Player 1 ongoing")
+    elsif players.include? pokemon2_id
+      errors.add(:base, "Player 2 ongoing")
     end
   end
   
   def check_player
-    p1 = pokemon1.id
-    p2 = pokemon2.id
+    p1 = pokemon1_id
+    p2 = pokemon2_id
 
     if p1 == p2
       errors.add(:base, "Player 1 and Player 2 must be different")
@@ -37,7 +59,7 @@ class PokemonBattle < ApplicationRecord
   def check_current_health_point
     p1 = pokemon1.current_health_point
     p2 = pokemon2.current_health_point
-
+    
     if p1<=0
        errors.add(:base, "Player 1 has zero health point")
     elsif p2<=0

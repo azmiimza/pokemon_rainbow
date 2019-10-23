@@ -21,7 +21,13 @@
       <td> <%= battle.pokemon2.name%> </td>
       <td> <%= battle.current_turn%> </td>
       <td> <%= battle.state%> </td>
-      <td> <%= battle.pokemon_winner.name%> </td>
+      <td> 
+      <% if battle.pokemon_winner_id == nil%>
+      No Winner Yet
+      <% else%>
+      <%= battle.pokemon_winner.name%> 
+       <% end %>
+      </td>
       
     </tr>
     <% end %>

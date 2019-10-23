@@ -5,9 +5,9 @@ class CreatePokemonBattles < ActiveRecord::Migration[6.0]
       t.integer :pokemon2_id
       t.integer :pokemon_winner_id
       t.integer :pokemon_loser_id
-      t.integer :current_turn
-      t.string :state
-      t.integer :experience_gain
+      t.integer :current_turn, default: 1
+      t.string :state, default: "Ongoing"
+      t.integer :experience_gain, default: 0
       t.integer :pokemon1_max_health_point
       t.integer :pokemon2_max_health_point
 

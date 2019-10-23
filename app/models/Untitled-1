@@ -1,4 +1,3 @@
-halaman index judul dibuat konsisten singular atau plural
-form berhasil edit atau create langsung redirect ke show
-di show skill namenya dibuat jadi judul
-pesan flash success kalau delete berhasil
+ubahstate jadi constant
+default value di set di model
+validasi default value

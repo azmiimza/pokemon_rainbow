@@ -15,7 +15,6 @@ class PokemonSkill < ApplicationRecord
     skill_type = Skill.find(self.skill_id).element_type
     if pokemon_type!=skill_type
       errors.add(:base, "Pokemon element type doesn't match with Skill element type")
-      puts "ERROR ELEMENTTTTTT"
     end
   end
 
@@ -28,7 +27,6 @@ class PokemonSkill < ApplicationRecord
   end
 
   def check_size
-   
     if PokemonSkill.where(pokemon_id: self.pokemon_id).count>=4
       errors.add(:base, "Skill less than 4")
     end
