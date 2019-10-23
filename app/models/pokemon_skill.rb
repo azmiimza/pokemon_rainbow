@@ -21,7 +21,7 @@ class PokemonSkill < ApplicationRecord
   def check_pp
     max_pp = self.skill.max_pp
     if self.current_pp>max_pp
-      errors.add(:base, "Current PP less than Max PP")
+      errors.add(:base, "Current PP must less than Max PP")
     end
   end
 
