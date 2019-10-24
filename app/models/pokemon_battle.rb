@@ -62,9 +62,9 @@ class PokemonBattle < ApplicationRecord
     p1 = pokemon1.current_health_point
     p2 = pokemon2.current_health_point
     
-    if p1<=0
+    if p1<0
        errors.add(:base, "Player 1 has zero health point")
-    elsif p2<=0
+    elsif p2<0
       errors.add(:base, "Player 2 has zero health point")
     end
   end

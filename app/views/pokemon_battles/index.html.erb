@@ -16,11 +16,8 @@
     </tr>
     <% @battles.each do |battle|%>
     <tr>
-      <% if battle.state == PokemonBattle::FINISHED %>
-      <td> <%= battle.id %> </td>
-      <% else %>
+   
       <td> <%= link_to battle.id, pokemon_battle_path(battle.id) %> </td>
-      <% end %>
       <td> <%= battle.pokemon1.name%> </td>
       <td> <%= battle.pokemon2.name%> </td>
       <td> <%= battle.current_turn%> </td>
