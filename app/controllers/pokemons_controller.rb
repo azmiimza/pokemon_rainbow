@@ -33,7 +33,7 @@ class PokemonsController < ApplicationController
   end
 
   def index
-    @pokemons = Pokemon.paginate(page: params[:page], per_page: 5)
+    @pokemons = Pokemon.reorder("id ASC").paginate(page: params[:page], per_page: 5)
   end
 
   def show

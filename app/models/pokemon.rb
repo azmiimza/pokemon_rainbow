@@ -3,7 +3,7 @@
   # after_initialize :set_defaults, if: :new_record?
   belongs_to :pokedex
 
-  has_many :pokemon_skills
+  has_many :pokemon_skills, dependent: :destroy
   has_many :skills, through: :pokemon_skills
   
   validates :name, presence: true, length:{maximum:45}, uniqueness: true
@@ -16,10 +16,4 @@
   validates :speed, presence: true, numericality: { greater_than:0}
   validates :current_experience, presence: true, numericality: {greater_than_or_equal_to: 0}
  
-  # def set_defaults
-  #   self.level = 1
-  #   self.current_experience = 0
-  # end
-
-
 end

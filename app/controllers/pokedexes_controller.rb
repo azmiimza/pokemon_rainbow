@@ -4,7 +4,7 @@ class PokedexesController < ApplicationController
   end
 
   def index
-    @pokedexes = Pokedex.paginate(page: params[:page], per_page: 5)
+    @pokedexes = Pokedex.reorder("id ASC").paginate(page: params[:page], per_page: 5)
   end
 
   def edit

@@ -12,11 +12,12 @@ class PokemonBattle < ApplicationRecord
   FINISHED = 'Finished'.freeze
   STATE=[ONGOING, FINISHED]
   enumerize :state, in: STATE
+
+  after_initialize :set_default_attr, if: :new_record?
   
   validate :check_player
-  validate :check_current_health_point
-  after_initialize :set_default_attr, if: :new_record?
-  after_initialize :check_state, if: :new_record?
+  validate :check_current_health_point, if: :new_record?
+  validate :check_state, if: :new_record?
 
   validates :pokemon1_id, presence: true, numericality: {greater_than: 0}
   validates :pokemon2_id, presence: true, numericality: {greater_than: 0}

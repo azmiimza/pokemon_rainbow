@@ -31,8 +31,6 @@
 
             <% else %>
                 <%= form_for(:battle, url: pokemon_battle_path(@pokemon_battle.id), method: "patch") do |f|%>
-                <%= f.hidden_field :player_one, :value=>@pokemon_battle.pokemon1.id %>
-                <%= f.hidden_field :player_two, :value=>@pokemon_battle.pokemon2.id %>
                 <%= f.select :skill_id, options_for_select(@pokemon_battle.pokemon1.skills.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
                 <% if @pokemon_battle.current_turn%2==0 %>
                         <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>
@@ -91,9 +89,6 @@
             <% if @pokemon_battle.state == PokemonBattle::FINISHED %>
             <% else %>
                 <%= form_for(:battle, url: pokemon_battle_path(@pokemon_battle.id), method: "patch") do |f|%>
-                <%= f.hidden_field :player_one, :value=>@pokemon_battle.pokemon1.id %>
-                <%= f.hidden_field :player_two, :value=>@pokemon_battle.pokemon2.id %>
-
                 <%= f.select :skill_id, options_for_select(@pokemon_battle.pokemon2.skills.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
                 <% if @pokemon_battle.current_turn%2==1 %>
                     <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>

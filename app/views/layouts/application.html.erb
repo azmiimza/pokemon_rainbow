@@ -11,18 +11,23 @@
 </head>
 
 <body>
-  <%= render 'layouts/header'%>
+  <header>
+    <%= render 'layouts/header'%>
+  </header>
 
   <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>"><%= value %></div>
+    <div class="alert alert-<%= key %>"><%= value %></div>
   <% end %>
   
   <div class="container-fluid" style="margin-top:40px">
     <%= yield %>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <%= render 'layouts/footer'%>
+    </footer>
   </div>
 
-  <%= render 'layouts/footer'%>
-
+ 
 </body>
 
 </html>

@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 2019_10_22_091304) do
     t.integer "pokemon2_id"
     t.integer "pokemon_winner_id"
     t.integer "pokemon_loser_id"
-    t.integer "current_turn"
-    t.string "state"
-    t.integer "experience_gain"
+    t.integer "current_turn", default: 1
+    t.string "state", default: "Ongoing"
+    t.integer "experience_gain", default: 0
     t.integer "pokemon1_max_health_point"
     t.integer "pokemon2_max_health_point"
     t.datetime "created_at", precision: 6, null: false
@@ -54,13 +54,13 @@ ActiveRecord::Schema.define(version: 2019_10_22_091304) do
   create_table "pokemons", force: :cascade do |t|
     t.bigint "pokedex_id", null: false
     t.string "name"
-    t.integer "level"
+    t.integer "level", default: 1
     t.integer "max_health_point"
     t.integer "current_health_point"
     t.integer "attack"
     t.integer "defence"
     t.integer "speed"
-    t.integer "current_experience"
+    t.integer "current_experience", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["pokedex_id"], name: "index_pokemons_on_pokedex_id"
@@ -75,6 +75,10 @@ ActiveRecord::Schema.define(version: 2019_10_22_091304) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "pokemon_battles", "pokemons", column: "pokemon1_id"
+  add_foreign_key "pokemon_battles", "pokemons", column: "pokemon2_id"
+  add_foreign_key "pokemon_battles", "pokemons", column: "pokemon_loser_id"
+  add_foreign_key "pokemon_battles", "pokemons", column: "pokemon_winner_id"
   add_foreign_key "pokemon_skills", "pokemons"
   add_foreign_key "pokemon_skills", "skills"
   add_foreign_key "pokemons", "pokedexes"

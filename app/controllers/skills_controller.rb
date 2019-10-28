@@ -4,7 +4,7 @@ class SkillsController < ApplicationController
   end
 
   def index
-    @skills = Skill.paginate(page: params[:page], per_page: 5)
+    @skills = Skill.reorder("element_type ASC").paginate(page: params[:page], per_page: 5)
   end
 
   def show

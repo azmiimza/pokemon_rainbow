@@ -1,5 +1,5 @@
 class Pokedex < ApplicationRecord
-  has_many :pokemons
+  has_many :pokemons, dependent: :destroy
   extend Enumerize
   # NORMAL = 'normal'.freeze
   ELEMENT_TYPE = ["normal","fighting","flying","poison","ground","rock","bug",
