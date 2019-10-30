@@ -1,7 +1,7 @@
 class BattleEngine
   include PokemonBattleCalculator
 
-  attr_accessor :attacker, :defender, :pokemon_battle, :skill, :action, :pp
+  attr_accessor :attacker, :defender, :pokemon_battle, :skill, :action, :pp, :damage, :log
 
   def initialize(battle_id: nil, skill_id: nil, action: nil)
     @action = action
@@ -17,11 +17,10 @@ class BattleEngine
     
     @skill = Skill.find_by(id: skill_id)
     @pp = PokemonSkill.find_by(skill_id: skill_id, pokemon_id: @attacker.id)
+
   end
 
   def valid_next_turn?
-    # require 'pry'
-    # binding.pry
     if (@pp.present? && @pp.current_pp > 0 && @action=="Attack") || @action == "Surrender"
       true
     else
@@ -42,10 +41,11 @@ class BattleEngine
     @defender.save!
     @pokemon_battle.save!
     @pp.save! if @pp.present?
+
   end
 
   def attack
-    damage = calculate_damage(@attacker, @defender, @skill)
+    @damage = calculate_damage(@attacker, @defender, @skill)
 
     # reduce pp for specific @attacker skill
     pp_left = @pp.current_pp-1
@@ -75,11 +75,13 @@ class BattleEngine
     end
 
     turn = @pokemon_battle.current_turn
+ 
+    log = PokemonBattleLog.new(pokemon_battle_id: @pokemon_battle.id, turn: turn, skill_id: @skill.id, damage: @damage, attacker_id: @attacker.id, defender_id: @defender.id, attacker_current_health_point: @attacker.current_health_point, defender_current_health_point: @defender.current_health_point, action_type: @action)
+    log.save!
     turn+=1
     @pokemon_battle.current_turn = turn
     save!
   end
-
 
   def surrender
     @pokemon_battle.attributes = {state: PokemonBattle::FINISHED, pokemon_winner_id: @defender.id, pokemon_loser_id: @attacker.id}
@@ -96,6 +98,11 @@ class BattleEngine
       @defender.attributes = {level: increased_level, max_health_point: health, attack: attack, defence: defence , speed: speed}
     end
 
+
+    turn = @pokemon_battle.current_turn
+    @damage = 0
+    log = PokemonBattleLog.new(pokemon_battle_id: @pokemon_battle.id, turn: turn, skill_id: @skill.id, damage: @damage, attacker_id: @attacker.id, defender_id: @defender.id, attacker_current_health_point: @attacker.current_health_point, defender_current_health_point: @defender.current_health_point, action_type: @action)
+    log.save!
     save!
   end
 end

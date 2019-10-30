@@ -17,29 +17,18 @@ class PokemonBattlesController < ApplicationController
 
     @pokemon_battle.pokemon1_max_health_point = @poke_1.max_health_point
     @pokemon_battle.pokemon2_max_health_point = @poke_2.max_health_point
-    
 
-    # require 'pry'
-    # binding.pry
-
-    # if @poke_1.skills.none? 
-    #   flash[:danger] = "Player 1 don't have any skill"
-    #   redirect_to pokemon_battles_new_path
-    # elsif @poke_2.skills.none? 
-    #   flash[:danger] = "Player 2 don't have any skill"
-    #   redirect_to pokemon_battles_new_path
-    # else
-      if @pokemon_battle.save
-          flash[:success] = "Battle created"
-          redirect_to pokemon_battle_path(@pokemon_battle.id)
-      else
-          render 'new'
-      end
-    # end
+    if @pokemon_battle.save
+        flash[:success] = "Battle created"
+        redirect_to pokemon_battle_path(@pokemon_battle.id)
+    else
+        render 'new'
+    end
   end
 
   def show
     @pokemon_battle = PokemonBattle.find(params[:id])
+    @logs= PokemonBattleLog.where(pokemon_battle_id: params[:id])
   end
 
   def update

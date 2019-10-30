@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_091304) do
+ActiveRecord::Schema.define(version: 2019_10_30_021706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(version: 2019_10_22_091304) do
     t.string "image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "pokemon_battle_logs", force: :cascade do |t|
+    t.bigint "pokemon_battle_id", null: false
+    t.integer "turn"
+    t.bigint "skill_id", null: false
+    t.integer "damage"
+    t.integer "attacker_id"
+    t.integer "defender_id"
+    t.integer "attacker_current_health_point"
+    t.integer "defender_current_health_point"
+    t.string "action_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pokemon_battle_id"], name: "index_pokemon_battle_logs_on_pokemon_battle_id"
+    t.index ["skill_id"], name: "index_pokemon_battle_logs_on_skill_id"
   end
 
   create_table "pokemon_battles", force: :cascade do |t|
@@ -75,6 +91,10 @@ ActiveRecord::Schema.define(version: 2019_10_22_091304) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "pokemon_battle_logs", "pokemon_battles"
+  add_foreign_key "pokemon_battle_logs", "pokemons", column: "attacker_id"
+  add_foreign_key "pokemon_battle_logs", "pokemons", column: "defender_id"
+  add_foreign_key "pokemon_battle_logs", "skills"
   add_foreign_key "pokemon_battles", "pokemons", column: "pokemon1_id"
   add_foreign_key "pokemon_battles", "pokemons", column: "pokemon2_id"
   add_foreign_key "pokemon_battles", "pokemons", column: "pokemon_loser_id"

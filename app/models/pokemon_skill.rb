@@ -27,7 +27,7 @@ class PokemonSkill < ApplicationRecord
 
   def check_size
     if PokemonSkill.where(pokemon_id: self.pokemon_id).count>=4
-      errors.add(:base, "Skill less than 4")
+      errors.add(:base, "Skill cant be mor than 4")
     end
   end
 end

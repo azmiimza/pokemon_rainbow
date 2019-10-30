@@ -12,6 +12,7 @@ class Pokedex < ApplicationRecord
   validates :base_defence, presence: true, numericality: { greater_than_or_equal_to:0}
   validates :base_speed, presence: true, numericality: { greater_than_or_equal_to:0}
   validates :image_url, presence: true
+  validates :element_type, presence: true
 
   enumerize :element_type, in: ELEMENT_TYPE
 end

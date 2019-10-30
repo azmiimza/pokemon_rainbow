@@ -1,12 +1,24 @@
 Rails.application.routes.draw do
+  get 'pokemon_battle_logs/create'
   get 'pokemon_battles/new'
   get 'pokemon_battles/index'
   get 'pokemon_battles/show'
   resources :pokedexes
   resources :skills
   resources :pokemons do
+    member do
+      post :heal
+      patch :heal
+    end
+
+    collection do
+      post :heal_all
+      patch :heal_all
+    end
     resources :pokemon_skills, only: [:create, :destroy]
   end
+
+
   resources :pokemon_battles
 
   root 'basic_layouts#home'

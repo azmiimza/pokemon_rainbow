@@ -1,11 +1,11 @@
 class PokemonBattle < ApplicationRecord
-  # include PokemonBattleCalculator
-
   extend Enumerize
   belongs_to :pokemon1, class_name: 'Pokemon'
   belongs_to :pokemon2, class_name: 'Pokemon'
   belongs_to :pokemon_winner, class_name: 'Pokemon', optional: true
   belongs_to :pokemon_loser, class_name: 'Pokemon', optional: true
+
+  has_many :pokemon_battle_logs, dependent: :destroy
 
   # State Constant
   ONGOING = 'Ongoing'.freeze
@@ -19,11 +19,11 @@ class PokemonBattle < ApplicationRecord
   validate :check_current_health_point, if: :new_record?
   validate :check_state, if: :new_record?
 
-  validates :pokemon1_id, presence: true, numericality: {greater_than: 0}
-  validates :pokemon2_id, presence: true, numericality: {greater_than: 0}
+  validates :pokemon1, presence: true
+  validates :pokemon2, presence: true
   validates :current_turn, numericality: {greater_than: 0}
   validates :state, presence: true, length: {maximum:45}
-  validates :experience_gain, numericality: {greater_than_or_equal_to: 0}
+  validates :experience_gain, presence: true, numericality: {greater_than_or_equal_to: 0}
   validates :pokemon1_max_health_point, presence: true, numericality: { greater_than_or_equal_to:0}
   validates :pokemon2_max_health_point, presence: true, numericality: { greater_than_or_equal_to:0}
 
@@ -38,10 +38,8 @@ class PokemonBattle < ApplicationRecord
   end
 
   def check_state
-    # require 'pry'
-    # binding.pry
-    ongoing = PokemonBattle.where(state: ONGOING)
-    players = ongoing.collect{|x|[x.pokemon1_id, x.pokemon2_id]}.flatten
+    ongoing = PokemonBattle.where(state: ::PokemonBattle::ONGOING)
+    players = ongoing.collect{|x|[x.pokemon1_id, x.pokemon2_id]}.flatten.uniq
 
     if players.include? pokemon1_id
       errors.add(:base, "Player 1 ongoing")
@@ -63,9 +61,9 @@ class PokemonBattle < ApplicationRecord
     p1 = pokemon1.current_health_point
     p2 = pokemon2.current_health_point
     
-    if p1<0
+    if p1<=0
        errors.add(:base, "Player 1 has zero health point")
-    elsif p2<0
+    elsif p2<=0
       errors.add(:base, "Player 2 has zero health point")
     end
   end

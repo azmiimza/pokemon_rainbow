@@ -12,11 +12,11 @@
             </h3>
             <%= image_tag("#{@pokemon_battle.pokemon1.pokedex.image_url}", {:style => "height:100px;margin-top:20px"})%>
 
-                <h4 style="margin-top:20px">Current HP :
-                    <%= @pokemon_battle.pokemon1.current_health_point%> /
-                    <%= @pokemon_battle.pokemon1.max_health_point%>
-                </h4>
-           
+            <h4 style="margin-top:20px">Current HP :
+                <%= @pokemon_battle.pokemon1.current_health_point%> /
+                <%= @pokemon_battle.pokemon1.max_health_point%>
+            </h4>
+
             <h4 style="margin-top:20px">Attack :
                 <%= @pokemon_battle.pokemon1.attack%>
             </h4>
@@ -32,13 +32,13 @@
             <% else %>
                 <%= form_for(:battle, url: pokemon_battle_path(@pokemon_battle.id), method: "patch") do |f|%>
                 <%= f.select :skill_id, options_for_select(@pokemon_battle.pokemon1.skills.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
-                <% if @pokemon_battle.current_turn%2==0 %>
-                        <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>
-                        <%= f.submit "Surrender", disabled:true, class: "btn btn-danger", style: "margin-top: 30px;"%>
+                    <% if @pokemon_battle.current_turn%2==0 %>
+                    <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>
+                    <%= f.submit "Surrender", disabled:true, class: "btn btn-danger", style: "margin-top: 30px;"%>
                     <% else %>
-                        <%= f.submit "Attack",class: "btn btn-primary", style: "margin-top: 30px;"%>
-                        <%= f.hidden_field :player_one_surrender, :value=>true %>
-                        <%= f.submit "Surrender", class: "btn btn-danger", style: "margin-top: 30px;"%>
+                    <%= f.submit "Attack",class: "btn btn-primary", style: "margin-top: 30px;"%>
+                    <%= f.hidden_field :player_one_surrender, :value=>true %>
+                    <%= f.submit "Surrender", class: "btn btn-danger", style: "margin-top: 30px;"%>
                     <%end%>
                 <%end%>
             <%end%>
@@ -70,12 +70,12 @@
                 <%= @pokemon_battle.pokemon2.current_experience%>
             </h3>
             <%= image_tag("#{@pokemon_battle.pokemon2.pokedex.image_url}", {:style => "height:100px;margin-top:20px"})%>
-       
-                <h4 style="margin-top:20px">Current HP :
-                    <%= @pokemon_battle.pokemon2.current_health_point%>/
-                    <%= @pokemon_battle.pokemon2.max_health_point%>
-                </h4>
-         
+
+            <h4 style="margin-top:20px">Current HP :
+                <%= @pokemon_battle.pokemon2.current_health_point%>/
+                <%= @pokemon_battle.pokemon2.max_health_point%>
+            </h4>
+
             <h4 style="margin-top:20px">Attack :
                 <%= @pokemon_battle.pokemon2.attack%>
             </h4>
@@ -88,18 +88,49 @@
 
             <% if @pokemon_battle.state == PokemonBattle::FINISHED %>
             <% else %>
-                <%= form_for(:battle, url: pokemon_battle_path(@pokemon_battle.id), method: "patch") do |f|%>
-                <%= f.select :skill_id, options_for_select(@pokemon_battle.pokemon2.skills.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
-                <% if @pokemon_battle.current_turn%2==1 %>
-                    <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>
-                    <%= f.submit "Surrender", disabled:true, class: "btn btn-danger", style: "margin-top: 30px;"%>
-                <% else %>
-                <%= f.submit "Attack",class: "btn btn-primary", style: "margin-top: 30px;"%>
-                <%= f.hidden_field :player_two_surrender, :value=>true %>
-                <%= f.submit "Surrender", class: "btn btn-danger", style: "margin-top: 30px;"%>
-                <%end%>
-                <%end%>
+            <%= form_for(:battle, url: pokemon_battle_path(@pokemon_battle.id), method: "patch") do |f|%>
+            <%= f.select :skill_id, options_for_select(@pokemon_battle.pokemon2.skills.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
+            <% if @pokemon_battle.current_turn%2==1 %>
+            <%= f.submit "Attack", disabled: true,class: "btn btn-primary", style: "margin-top: 30px;"%>
+            <%= f.submit "Surrender", disabled:true, class: "btn btn-danger", style: "margin-top: 30px;"%>
+            <% else %>
+            <%= f.submit "Attack",class: "btn btn-primary", style: "margin-top: 30px;"%>
+            <%= f.hidden_field :player_two_surrender, :value=>true %>
+            <%= f.submit "Surrender", class: "btn btn-danger", style: "margin-top: 30px;"%>
+            <%end%>
+            <%end%>
             <%end%>
         </div>
     </div>
+
+
+
+    <table class="table table-hover" style="margin-top:50px">
+        <tr>
+            <th>Turn</th>
+            <th>Action</th>
+            <th>Skill</th>
+            <th>Attacker</th>
+            <th>Defender</th>
+            <th>Damage Dealt</th>
+            <th>Attacker HP</th>
+            <th>Defender HP</th>
+        </tr>
+        <% @logs.each do |log|%>
+        <tr>
+            <td> <%= log.turn%> </td>
+            <td> <%= log.action_type%> </td>
+            <td> <%= log.skill.name%> </td>
+            <td> <%= log.attacker.name %> </td>
+            <td> <%= log.defender.name%> </td>
+            <td> <%= log.damage%> </td>
+            <td> <%= log.attacker_current_health_point%> </td>
+            <td> <%= log.defender_current_health_point%> </td>
+        </tr>
+        <% end %>
+    </table>
+
+
+
+
 </div>

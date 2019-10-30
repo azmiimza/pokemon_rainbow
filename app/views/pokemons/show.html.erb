@@ -4,6 +4,7 @@
   <div class="col-md-12" style="margin-top:30px">
     <%= link_to "Edit", edit_pokemon_path, class:"btn btn-primary"%>
     <%= link_to "Delete", @pokemon, method: :delete, data: {confirm: "You sure?"}, class:"btn btn-danger"%>
+    <%= link_to "Heal", heal_pokemon_path, method: "patch", class:"btn btn-success"%>
 
     <h1 style="margin-top: 30px;margin-bottom:30px"><strong><%= @pokemon.name%></strong></h1>
     <h3>Level: <%= @pokemon.level%></h3>
