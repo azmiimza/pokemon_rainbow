@@ -1,6 +1,10 @@
 <% content_for :title, "Edit Pokedex - #{@pokedex.name}" %>
-
+<ol class="breadcrumb">
+    <%= render_breadcrumbs :tag => :li, :separator => ">" %>
+</ol>
 <div class="container">
+   
+
 <h1 style="margin-bottom:30px"><strong>Edit Pokedex</strong></h1>
 
 <div class="row">

@@ -1,10 +1,12 @@
 <% content_for :title, "Pokemon List" %>
-
+<ol class="breadcrumb">
+    <%= render_breadcrumbs :tag => :li, :separator => ">" %>
+</ol>
 <div class="container">
   <h1><strong>Pokemons</strong></h1>
 
   <%= link_to "New Pokemon", new_pokemon_path, html_options={class: "btn btn-primary", style: "margin-top:30px; margin-bottom:30px"}%>
-  <%= link_to "Heal All", heal_all_pokemons_path, method: "patch", class:"btn btn-success"%>
+  <%= link_to "Heal All", heal_all_pokemons_path, method: "post", class:"btn btn-success"%>
 
   <table class="table table-hover">
     <tr>

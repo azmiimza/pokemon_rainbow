@@ -1,6 +1,9 @@
 class PokedexesController < ApplicationController
+  before_action :breadcrumb
+
   def new
     @pokedex = Pokedex.new
+    add_breadcrumb "New Pokedex"
   end
 
   def index
@@ -9,6 +12,9 @@ class PokedexesController < ApplicationController
 
   def edit
     @pokedex = Pokedex.find(params[:id])
+    # add_breadcrumb "Pokedexes", pokedexes_path
+    add_breadcrumb "#{@pokedex.name}", pokedex_path(params[:id])
+    add_breadcrumb "Edit #{@pokedex.name}"
   end
 
   def destroy
@@ -29,22 +35,24 @@ class PokedexesController < ApplicationController
 
   def show
     @pokedex = Pokedex.find(params[:id])
+    # add_breadcrumb "Pokedexes", pokedexes_path
+    add_breadcrumb "#{@pokedex.name}"
   end
 
   def create
     @pokedex = Pokedex.new(poke_params)
-
     if @pokedex.save
       flash[:success] = "#{@pokedex.name} created"
       redirect_to pokedex_path(@pokedex.id)
     else
-    #   require 'pry'
-    # binding.pry
       render 'new'
     end
   end
 
   private
+  def breadcrumb
+    add_breadcrumb "Pokedexes", pokedexes_path
+  end
 
   def poke_params
     params.require(:pokedex).permit(:name, :base_health_point, :base_attack, :base_defence, :base_speed, :element_type, :image_url)

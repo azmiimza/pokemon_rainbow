@@ -17,7 +17,6 @@ class BattleEngine
     
     @skill = Skill.find_by(id: skill_id)
     @pp = PokemonSkill.find_by(skill_id: skill_id, pokemon_id: @attacker.id)
-
   end
 
   def valid_next_turn?
@@ -39,9 +38,9 @@ class BattleEngine
   def save!     
     @attacker.save!
     @defender.save!
+    @log.save!
     @pokemon_battle.save!
     @pp.save! if @pp.present?
-
   end
 
   def attack
@@ -76,8 +75,7 @@ class BattleEngine
 
     turn = @pokemon_battle.current_turn
  
-    log = PokemonBattleLog.new(pokemon_battle_id: @pokemon_battle.id, turn: turn, skill_id: @skill.id, damage: @damage, attacker_id: @attacker.id, defender_id: @defender.id, attacker_current_health_point: @attacker.current_health_point, defender_current_health_point: @defender.current_health_point, action_type: @action)
-    log.save!
+    @log = PokemonBattleLog.new(pokemon_battle_id: @pokemon_battle.id, turn: turn, skill_id: @skill.id, damage: @damage, attacker_id: @attacker.id, defender_id: @defender.id, attacker_current_health_point: @attacker.current_health_point, defender_current_health_point: @defender.current_health_point, action_type: @action)
     turn+=1
     @pokemon_battle.current_turn = turn
     save!
@@ -98,11 +96,14 @@ class BattleEngine
       @defender.attributes = {level: increased_level, max_health_point: health, attack: attack, defence: defence , speed: speed}
     end
 
-
     turn = @pokemon_battle.current_turn
     @damage = 0
-    log = PokemonBattleLog.new(pokemon_battle_id: @pokemon_battle.id, turn: turn, skill_id: @skill.id, damage: @damage, attacker_id: @attacker.id, defender_id: @defender.id, attacker_current_health_point: @attacker.current_health_point, defender_current_health_point: @defender.current_health_point, action_type: @action)
-    log.save!
+
+    if @skill == nil
+      @log = PokemonBattleLog.new(pokemon_battle_id: @pokemon_battle.id, turn: turn, skill_id: nil, damage: @damage, attacker_id: @attacker.id, defender_id: @defender.id, attacker_current_health_point: @attacker.current_health_point, defender_current_health_point: @defender.current_health_point, action_type: @action)
+    else
+      @log = PokemonBattleLog.new(pokemon_battle_id: @pokemon_battle.id, turn: turn, skill_id: @skill.id, damage: @damage, attacker_id: @attacker.id, defender_id: @defender.id, attacker_current_health_point: @attacker.current_health_point, defender_current_health_point: @defender.current_health_point, action_type: @action)
+    end
     save!
   end
 end

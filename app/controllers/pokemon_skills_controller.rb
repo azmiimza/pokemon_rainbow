@@ -12,17 +12,12 @@ class PokemonSkillsController < ApplicationController
       flash[:success] = "Skill added"
       redirect_to pokemon_path(@poke_skill.pokemon_id)
     else
-    #        require 'pry'
-    # binding.pry
       flash[:danger] = @poke_skill.errors.full_messages.join(" , ")
       redirect_to pokemon_path(@poke_skill.pokemon_id)
-      
     end
   end
 
   def destroy
-    # require 'pry'
-    # binding.pry
     PokemonSkill.find(params[:pokemon_id]).destroy
     flash[:success] = "Pokemon Skill deleted"
     redirect_to pokemon_path(params[:id])

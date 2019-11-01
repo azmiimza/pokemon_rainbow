@@ -1,5 +1,7 @@
 <% content_for :title, "Pokemon Battle" %>
-
+<ol class="breadcrumb">
+    <%= render_breadcrumbs :tag => :li, :separator => ">" %>
+</ol>
 <div class="container">
   <h1><strong>Pokemon Battles</strong></h1>
 
@@ -8,6 +10,7 @@
   <table class="table table-hover">
     <tr>
       <th>Battle ID</th>
+      <th>Battle Type</th>
       <th>Pokemon 1</th>
       <th>Pokemon 2</th>
       <th>Current Turn</th>
@@ -16,8 +19,8 @@
     </tr>
     <% @battles.each do |battle|%>
     <tr>
-   
       <td> <%= link_to battle.id, pokemon_battle_path(battle.id) %> </td>
+      <td> <%= battle.battle_type%> </td>
       <td> <%= battle.pokemon1.name%> </td>
       <td> <%= battle.pokemon2.name%> </td>
       <td> <%= battle.current_turn%> </td>

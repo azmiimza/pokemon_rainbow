@@ -18,7 +18,8 @@ class PokemonBattle < ApplicationRecord
   validate :check_player
   validate :check_current_health_point, if: :new_record?
   validate :check_state, if: :new_record?
-
+  
+  validates :battle_type, presence: true
   validates :pokemon1, presence: true
   validates :pokemon2, presence: true
   validates :current_turn, numericality: {greater_than: 0}
@@ -41,9 +42,9 @@ class PokemonBattle < ApplicationRecord
     ongoing = PokemonBattle.where(state: ::PokemonBattle::ONGOING)
     players = ongoing.collect{|x|[x.pokemon1_id, x.pokemon2_id]}.flatten.uniq
 
-    if players.include? pokemon1_id
+    if players.include?(pokemon1_id)
       errors.add(:base, "Player 1 ongoing")
-    elsif players.include? pokemon2_id
+    elsif players.include?(pokemon2_id)
       errors.add(:base, "Player 2 ongoing")
     end
   end

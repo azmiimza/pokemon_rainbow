@@ -1,5 +1,7 @@
 <% content_for :title, "#{@pokedex.name}" %>
-
+<ol class="breadcrumb">
+    <%= render_breadcrumbs :tag => :li, :separator => ">" %>
+</ol>
 <div class="row">
   <div class="col-md-6 text-center" style="margin-top:30px">
     <%= link_to "Edit", edit_pokedex_path, class:"btn btn-primary"%>

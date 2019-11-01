@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_10_30_021706) do
   end
 
   create_table "pokemon_battles", force: :cascade do |t|
+    t.string "battle_type"
     t.integer "pokemon1_id"
     t.integer "pokemon2_id"
     t.integer "pokemon_winner_id"

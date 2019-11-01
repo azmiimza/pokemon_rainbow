@@ -1,6 +1,9 @@
 class SkillsController < ApplicationController
+  before_action :breadcrumb
+
   def new
     @skill = Skill.new
+    add_breadcrumb "New Skill"
   end
 
   def index
@@ -9,10 +12,13 @@ class SkillsController < ApplicationController
 
   def show
     @skill = Skill.find(params[:id])
+    add_breadcrumb "#{@skill.name}"
   end
 
   def edit
     @skill = Skill.find(params[:id])
+    add_breadcrumb "#{@skill.name}", skill_path(params[:id])
+    add_breadcrumb "Edit #{@skill.name}"
   end
 
   def update
@@ -43,6 +49,11 @@ class SkillsController < ApplicationController
   end
 
   private 
+
+  def breadcrumb
+    add_breadcrumb "Skills", skills_path
+  end
+
   def skill_params
     params.require(:skill).permit(:name, :power, :max_pp, :element_type)
   end

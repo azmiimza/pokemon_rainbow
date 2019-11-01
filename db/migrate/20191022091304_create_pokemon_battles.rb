@@ -1,6 +1,7 @@
 class CreatePokemonBattles < ActiveRecord::Migration[6.0]
   def change
     create_table :pokemon_battles do |t|
+      t.string :battle_type
       t.integer :pokemon1_id
       t.integer :pokemon2_id
       t.integer :pokemon_winner_id

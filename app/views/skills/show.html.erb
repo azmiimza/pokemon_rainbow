@@ -1,5 +1,7 @@
 <% content_for :title, "#{@skill.name}" %>
-
+<ol class="breadcrumb">
+    <%= render_breadcrumbs :tag => :li, :separator => ">" %>
+</ol>
 <div class="container">
   <div class="col-md-12" style="margin-top:30px">
     <%= link_to "Edit", edit_skill_path, class:"btn btn-primary"%>

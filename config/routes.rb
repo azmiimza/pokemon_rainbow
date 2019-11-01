@@ -8,12 +8,10 @@ Rails.application.routes.draw do
   resources :pokemons do
     member do
       post :heal
-      patch :heal
     end
 
     collection do
       post :heal_all
-      patch :heal_all
     end
     resources :pokemon_skills, only: [:create, :destroy]
   end
