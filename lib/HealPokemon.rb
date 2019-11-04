@@ -32,7 +32,6 @@ class HealPokemon
     if players.include?(poke.id)
       false
     else
-     
       poke.current_health_point = poke.max_health_point
       poke.save!
       pokemon_skills = PokemonSkill.where(pokemon_id: poke.id)
