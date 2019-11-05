@@ -41,7 +41,7 @@
 
   <%= form_for(:skill, url: pokemon_pokemon_skills_path(@pokemon.id)) do |f|%>
 
-  <%= f.select :skill_id, options_for_select(Skill.all.collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
+  <%= f.select :skill_id, options_for_select(Skill.where(element_type: @pokemon.pokedex.element_type).collect{ |u| [u.name, u.id] }), {}, class: "form-control" %>
   <%= f.submit "Submit", class: "btn btn-primary", style: "margin-top: 30px;"%>
   <%end%>
 
